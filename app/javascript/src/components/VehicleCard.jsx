@@ -19,7 +19,20 @@ const VehicleCard = ({ vehicle }) => {
     fetch(`/vehicles/${vehicle.external_id}/fuel_entries`)
       .then((response) => response.json())
       .then((data) => {
-        setEfficiency(data.efficiency.toFixed(2));
+        if (data.error) {
+          switch ((Math.floor(data.status/100)*100)) {
+            case 400:
+              toast.error("There was a problem with the Fleetio API request. Please contact Fleetio for more information.");
+              break;
+            case 500:
+              toast.error("There was a problem with the Fleetio API server. Please contact Fleetio for more information.")
+              break;
+            default:
+              toast.error(`The following error was recieved from the Fleetio Api: ${data.error}`);
+          }
+        } else {
+         setEfficiency(data.efficiency.toFixed(2));
+        }
         setLoading(false);
       })
       .catch(() => {
