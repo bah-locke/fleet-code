@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import VehicleIndexSkeleton from "../../components/VehicleIndexSkeleton";
-import VehicleCard from "../../components/VehicleCard";
+import CardGroup from "../../components/CardGroup";
+
+const _ = require('lodash');
 
 const Index = () => {
   const [loading, setLoading] = useState(false);
@@ -14,19 +16,22 @@ const Index = () => {
       .then((data) => {
         setVehicles(data);
         setLoading(false);
-      });
+      })
+      .then(() => {
+        console.log(_.groupBy(vehicles, 'category'));
+      })
   }, []);
 
   return (
     <ul
       role="list"
-      className="grid grid-cols-3 gap-x-4 gap-y-8 mb-10"
+      className="grid grid-cols-1 gap-x-4 gap-y-8 mb-10"
     >
       {loading ? (
         <VehicleIndexSkeleton />
       ) : (
-        vehicles.map((vehicle) => (
-          <VehicleCard vehicle={vehicle} key={vehicle.id} />
+        Object.entries(_.groupBy(vehicles, 'category')).map((group) => (
+          <CardGroup category={group[0]} vehicles={group[1]} />
         ))
       )}
     </ul>

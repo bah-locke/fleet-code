@@ -76,9 +76,6 @@ const VehicleCard = ({ vehicle }) => {
           <p className="block text-sm font-medium truncate text-gray-900 pointer-events-none">
             {vehicle.name}
           </p>
-          <p className="block text-sm font-medium text-gray-500 pointer-events-none">
-            {vehicle.category}
-          </p>
         </div>
 
         {(vehicle.efficiency || efficiency) ? (
