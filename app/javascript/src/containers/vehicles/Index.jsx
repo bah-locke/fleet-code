@@ -17,9 +17,6 @@ const Index = () => {
         setVehicles(data);
         setLoading(false);
       })
-      .then(() => {
-        console.log(_.groupBy(vehicles, 'category'));
-      })
   }, []);
 
   return (
@@ -30,8 +27,8 @@ const Index = () => {
       {loading ? (
         <VehicleIndexSkeleton />
       ) : (
-        Object.entries(_.groupBy(vehicles, 'category')).map((group) => (
-          <CardGroup category={group[0]} vehicles={group[1]} />
+        Object.entries(_.groupBy(vehicles, 'category')).map((group, ix) => (
+          <CardGroup category={group[0]} vehicles={group[1]} key={ix}/>
         ))
       )}
     </ul>
