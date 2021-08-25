@@ -4,9 +4,11 @@ module Vehicles
 
     def index
       fuel_entries_response = ApiServices::GetFuelEntriesService.call(@vehicle)
-      
-      if [fuel_entries_response].flatten.first["error"].nil?
-        render json: { efficiency: AppServices::CalculateFuelEfficiencyService.call(fuel_entries_response) }
+      fuel_efficiency_calc = AppServices::CalculateFuelEfficiencyService.call(fuel_entries_response)
+      @vehicle.efficiency = fuel_efficiency_calc
+
+      if @vehicle.save && [fuel_entries_response].flatten.first["error"].nil?
+        render json: { efficiency: fuel_efficiency_calc }
       else
         puts "The following response was recieved from the Fleetio API: #{fuel_entries_response}"
         render json: fuel_entries_response
