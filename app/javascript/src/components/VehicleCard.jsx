@@ -81,9 +81,9 @@ const VehicleCard = ({ vehicle }) => {
           </p>
         </div>
 
-        {efficiency ? (
+        {(vehicle.efficiency || efficiency) ? (
           <p className="inline-flex items-center px-1.5 py-0.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 whitespace-nowrap">
-            {efficiency} MPG
+            {Number.parseFloat(vehicle.efficiency || efficiency).toFixed(2)} MPG
           </p>
         ) : (
           <Button
