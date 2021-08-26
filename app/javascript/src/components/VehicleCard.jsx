@@ -7,7 +7,7 @@ import Card from "./Card";
 
 const VehicleCard = ({ vehicle }) => {
   const [loading, setLoading] = useState(false);
-  const [efficiency, setEfficiency] = useState();
+  const [efficiency, setEfficiency] = useState(vehicle.efficiency);
 
   const calculateEfficiency = useCallback(() => {
     setLoading(true);
@@ -46,9 +46,9 @@ const VehicleCard = ({ vehicle }) => {
           </p>
         </div>
 
-        {(vehicle.efficiency || efficiency) ? (
+        {(efficiency) ? (
           <p className="inline-flex items-center px-1.5 py-0.5 border border-transparent text-xs font-medium rounded text-gray-700 bg-gray-100 whitespace-nowrap">
-            {Number.parseFloat(vehicle.efficiency || efficiency).toFixed(2)} MPG
+            {Number.parseFloat(efficiency).toFixed(2)} MPG
           </p>
         ) : (
           <Button
